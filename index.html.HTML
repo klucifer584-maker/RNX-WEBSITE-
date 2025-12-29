@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RNX ESPORTS | Dominating the Arena</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- AOS Library for Scroll Animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Modern Esports Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Orbitron:wght@400;500;600;700;800;900&family=Montserrat:wght@400;600;900&display=swap');
+        
+        :root {
+            --primary-red: #e11b23;
+            --dark-bg: #0b0b0b;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--dark-bg); 
+            color: #ffffff;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            margin: 0;
+        }
+
+        /* Speed Optimizations */
+        img { content-visibility: auto; }
+
+        /* Smaller Floating Banner Style - SMOOTHER VERSION */
+        .floating-banner {
+            position: fixed;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: fit-content; 
+            min-width: 300px;
+            max-width: 90%; 
+            padding-left: 30px;
+            padding-right: 30px;
+            z-index: 1000;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(225, 27, 35, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            background: linear-gradient(90deg, #e11b23, #ff4d4d, #e11b23);
+            background-size: 200% auto;
+            animation: banner-flow 3s linear infinite;
+            /* Ultra smooth transition with custom cubic-bezier */
+            transition: top 0.8s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.5s ease; 
+        }
+
+        /* Smooth Hide Logic */
+        .banner-hidden {
+            top: -120px; 
+            opacity: 0;
+        }
+
+        @keyframes banner-flow {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        /* Shimmer & Glow for Banner Text */
+        .animated-banner-text {
+            display: inline-block;
+            font-weight: 800;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: #fff;
+            white-space: nowrap;
+            text-shadow: 0 0 8px rgba(255,255,255,0.6);
+            animation: text-pulse 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes text-pulse {
+            from { opacity: 0.8; transform: scale(0.97); }
+            to { opacity: 1; transform: scale(1.01); }
+        }
+
+        /* Branding Intro Animation */
+        #brand-intro {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            overflow: hidden;
+        }
+
+        .intro-logo {
+            width: 160px;
+            height: 160px;
+            z-index: 10001;
+            filter: drop-shadow(0 0 25px rgba(225, 27, 35, 0.7));
+            animation: superZoom 1.2s cubic-bezier(0.9, 0, 0.1, 1) forwards;
+        }
+
+        @keyframes superZoom {
+            0% { transform: scale(0.6); opacity: 0; filter: brightness(0) blur(5px); }
+            30% { transform: scale(1); opacity: 1; filter: brightness(1.2) blur(0px); }
+            65% { transform: scale(1.1); opacity: 1; filter: brightness(1.5); }
+            100% { transform: scale(35); opacity: 0; filter: blur(60px); }
+        }
+
+        h1, h2, .esports-heading {
+            font-family: 'Syncopate', sans-serif;
+            letter-spacing: -2px;
+        }
+
+        .esports-font {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        /* Management Frame Styles */
+        .management-frame {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(180deg, rgba(225, 27, 35, 0) 0%, rgba(225, 27, 35, 0.1) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            height: 450px;
+        }
+        
+        .management-frame:hover {
+            border-color: var(--primary-red);
+            box-shadow: 0 15px 40px rgba(225, 27, 35, 0.4);
+            transform: translateY(-12px) scale(1.03);
+        }
+
+        .management-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .management-frame:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Achievement Cards */
+        .achievement-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2.5rem 1.5rem;
+            border-radius: 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .achievement-card:hover {
+            border-color: var(--primary-red);
+            background: rgba(225, 27, 35, 0.05);
+            transform: translateY(-5px);
+        }
+
+        /* SOCIAL BUTTONS: NEW SHINE & GLOW ANIMATION */
+        .social-btn {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            cursor: pointer;
+            position: relative;
+            z-index: 1;
+            overflow: hidden; 
+            font-family: 'Orbitron', sans-serif;
+            text-decoration: none;
+            color: white;
+            border: none;
+        }
+
+        /* The Shine Sweep Effect */
+        .social-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(
+                to right,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.6) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: skewX(-25deg);
+            animation: shine-sweep 3s infinite;
+        }
+
+        @keyframes shine-sweep {
+            0% { left: -100%; }
+            20% { left: 150%; }
+            100% { left: 150%; }
+        }
+
+        .social-btn:hover {
+            transform: translateY(-5px) scale(1.08);
+            letter-spacing: 3px;
+        }
+
+        /* Specific Glow Colors */
+        .btn-yt { 
+            background: #ff0000; 
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4); 
+        }
+        .btn-yt:hover {
+            box-shadow: 0 8px 30px rgba(255, 0, 0, 0.8);
+        }
+
+        .btn-insta { 
+            background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); 
+            box-shadow: 0 4px 15px rgba(220, 39, 67, 0.4);
+        }
+        .btn-insta:hover {
+            box-shadow: 0 8px 30px rgba(188, 24, 136, 0.8);
+        }
+
+        .btn-dc { 
+            background: #5865F2; 
+            box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4);
+        }
+        .btn-dc:hover {
+            box-shadow: 0 8px 30px rgba(88, 101, 242, 0.8);
+        }
+
+    </style>
+</head>
+<body class="overflow-hidden"> 
+
+    <!-- Reveal Intro -->
+    <div id="brand-intro">
+        <img src="https://i.postimg.cc/xTwq1bNL/RNX-ESP.png" alt="RNX Logo" class="intro-logo">
+    </div>
+
+    <!-- Main Content -->
+    <div id="main-site">
+        
+        <!-- SMALLER FLOATING ANIMATED BANNER -->
+        <div id="scroll-banner" class="floating-banner text-white text-[8px] md:text-[10px] py-1.5 text-center font-bold esports-font overflow-hidden">
+            <span class="animated-banner-text">YAHAN JITEGA WAHI JISHKA SKILL HAI SEHI</span>
+        </div>
+
+        <!-- NAVBAR: Transparent with Blur -->
+        <header class="bg-transparent backdrop-blur-lg sticky top-0 z-50 border-b border-white/5 mt-16 md:mt-12 transition-all duration-300">
+            <nav class="max-w-full mx-auto px-2 md:px-4 py-2 flex items-center justify-between bg-black/30">
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-1 cursor-pointer">
+                        <img src="https://i.postimg.cc/xTwq1bNL/RNX-ESP.png" alt="RNX Logo" class="h-16 w-16 object-contain">
+                        <div class="text-xl font-black text-red-600 uppercase italic esports-font tracking-tighter">RNX ESPORTS</div>
+                    </div>
+                </div>
+                <div class="hidden md:flex space-x-8 font-bold text-[11px] uppercase tracking-[0.2em] text-gray-200 esports-font">
+                    <a href="#about" class="hover:text-red-500 transition-colors">About</a>
+                    <a href="#management" class="hover:text-red-500 transition-colors">Management</a>
+                    <a href="#achievements" class="hover:text-red-500 transition-colors">Achievements</a>
+                </div>
+            </nav>
+        </header>
+
+        <section id="about" class="py-20 bg-[#0b0b0b]">
+            <div class="container mx-auto px-4">
+                <div class="max-w-4xl mx-auto text-center mb-16">
+                    <h3 data-aos="fade-right" class="text-red-600 font-bold uppercase tracking-[0.5em] text-[10px] mb-4 esports-font">WHO WE ARE</h3>
+                    <h2 data-aos="fade-left" class="text-4xl md:text-6xl font-black uppercase italic mb-8">About <span class="text-red-600">RNX</span></h2>
+                    <p data-aos="fade-up" class="text-gray-300 text-lg md:text-xl leading-relaxed italic max-w-4xl mx-auto mb-12">
+                        RNX ESPORTS is a professional Free Fire esports organisation owned by <span class="text-white font-bold underline decoration-red-600 esports-font">Kaushik Roy Choudhary</span>.
+                    </p>
+                </div>
+
+                <!-- FOUNDERS SECTION -->
+                <div id="leadership" class="pt-20 mb-32">
+                    <div class="text-center mb-16">
+                        <h3 class="text-red-600 font-bold uppercase tracking-[0.5em] text-[10px] mb-4 esports-font">THE VISIONARIES</h3>
+                        <h2 class="text-4xl md:text-5xl font-black uppercase italic">Founder & <span class="text-red-600">Co-Founder</span></h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto">
+                        <div class="management-frame group cursor-pointer" data-aos="fade-up">
+                            <img src="https://i.postimg.cc/dtZNCDnz/1735218707967.png" alt="Kaushik Roy Choudhary">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent p-8 flex flex-col justify-end">
+                                <h4 class="text-2xl font-black uppercase italic esports-font group-hover:text-red-500 transition-colors">Kaushik Roy Choudhary</h4>
+                                <p class="text-red-500 font-bold text-xs uppercase tracking-[0.3em] mt-2 esports-font">Founder & CEO</p>
+                            </div>
+                        </div>
+
+                        <div class="management-frame group cursor-pointer" data-aos="fade-up" data-aos-delay="200">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop" alt="Co-Founder">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent p-8 flex flex-col justify-end">
+                                <h4 class="text-2xl font-black uppercase italic esports-font group-hover:text-red-500 transition-colors">Team Co-Founder</h4>
+                                <p class="text-red-500 font-bold text-xs uppercase tracking-[0.3em] mt-2 esports-font">Co-Founder</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MANAGEMENT TEAM SECTION -->
+                <div id="management" class="pt-20 mb-32">
+                    <div class="text-center mb-16">
+                        <h3 class="text-red-600 font-bold uppercase tracking-[0.5em] text-[10px] mb-4 esports-font">OPERATIONS CONTROL</h3>
+                        <h2 class="text-4xl md:text-5xl font-black uppercase italic">Management <span class="text-red-600">Team</span></h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+                        <div class="management-frame group cursor-pointer" data-aos="fade-up">
+                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1974&auto=format&fit=crop" alt="Operation Head">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent p-8 flex flex-col justify-end">
+                                <h4 class="text-2xl font-black uppercase italic esports-font group-hover:text-red-500 transition-colors">Operation Head</h4>
+                                <p class="text-red-500 font-bold text-xs uppercase tracking-[0.3em] mt-2 esports-font">Head of Operations</p>
+                            </div>
+                        </div>
+
+                        <div class="management-frame group cursor-pointer" data-aos="fade-up" data-aos-delay="200">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2070&auto=format&fit=crop" alt="Team Manager">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent p-8 flex flex-col justify-end">
+                                <h4 class="text-2xl font-black uppercase italic esports-font group-hover:text-red-500 transition-colors">Team Manager</h4>
+                                <p class="text-red-500 font-bold text-xs uppercase tracking-[0.3em] mt-2 esports-font">General Manager</p>
+                            </div>
+                        </div>
+
+                        <div class="management-frame group cursor-pointer" data-aos="fade-up" data-aos-delay="400">
+                            <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=1974&auto=format&fit=crop" alt="Social Media Manager">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent p-8 flex flex-col justify-end">
+                                <h4 class="text-2xl font-black uppercase italic esports-font group-hover:text-red-500 transition-colors">SM Manager</h4>
+                                <p class="text-red-500 font-bold text-xs uppercase tracking-[0.3em] mt-2 esports-font">Social Media Head</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ACHIEVEMENTS SECTION -->
+                <div id="achievements" class="pt-20">
+                    <div class="text-center mb-16">
+                        <h3 class="text-red-600 font-bold uppercase tracking-[0.5em] text-[10px] mb-4 esports-font">SOCIAL FOOTPRINT</h3>
+                        <h2 class="text-4xl md:text-5xl font-black uppercase italic">Major <span class="text-red-600">Achievements</span></h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                        <div class="achievement-card group" data-aos="zoom-in">
+                            <i class="fab fa-youtube text-5xl text-red-600 mb-6 group-hover:scale-110 transition-transform"></i>
+                            <h4 class="text-3xl font-black esports-font mb-2">1.5M+</h4>
+                            <p class="text-gray-400 uppercase tracking-widest text-xs font-bold esports-font">Subscribers</p>
+                            <a href="https://youtube.com/@rockyrdx?si=TeGkzXfPZkzasgVc" target="_blank" class="social-btn btn-yt">Subscribe</a>
+                        </div>
+
+                        <div class="achievement-card group" data-aos="zoom-in" data-aos-delay="200">
+                            <i class="fab fa-instagram text-5xl text-pink-500 mb-6 group-hover:scale-110 transition-transform"></i>
+                            <h4 class="text-3xl font-black esports-font mb-2">80K+</h4>
+                            <p class="text-gray-400 uppercase tracking-widest text-xs font-bold esports-font">Followers</p>
+                            <a href="https://www.instagram.com/haqserocky?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="social-btn btn-insta">Follow</a>
+                        </div>
+
+                        <div class="achievement-card group" data-aos="zoom-in" data-aos-delay="400">
+                            <i class="fab fa-discord text-5xl text-[#5865F2] mb-6 group-hover:scale-110 transition-transform"></i>
+                            <h4 class="text-3xl font-black esports-font mb-2">200K+</h4>
+                            <p class="text-gray-400 uppercase tracking-widest text-xs font-bold esports-font">Members</p>
+                            <a href="https://discord.gg/rnx" target="_blank" class="social-btn btn-dc">Join Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="bg-black py-16 border-t border-white/5 text-center">
+            <div class="text-[10px] text-gray-600 uppercase tracking-[0.5em] esports-font">© 2024 RNX ESPORTS PVT LTD.</div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        const banner = document.getElementById('scroll-banner');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY < 40) {
+                banner.classList.remove('banner-hidden');
+            } else {
+                banner.classList.add('banner-hidden');
+            }
+        });
+
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('brand-intro').style.display = 'none';
+                document.body.classList.remove('overflow-hidden');
+                AOS.init({ duration: 1000, once: true });
+            }, 1200);
+        });
+    </script>
+</body>
+</html>
